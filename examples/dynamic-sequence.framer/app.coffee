@@ -1,4 +1,4 @@
-# Animation Collections
+# Dynamic Sequence
 # by Isaac Weinhausen
 # http://isaacw.com
 
@@ -28,13 +28,12 @@ colors =
 
 # Override defaults
 Framer.Defaults.Layer.borderRadius = 8
-Framer.Defaults.Layer.backgroundColor = colors["blue"]
-Framer.Defaults.Animation.time = 0.3
+Framer.Defaults.Animation.time = 0.2
 
 
 # Set canvas props
 bg = new BackgroundLayer 
-	backgroundColor: colors["darkGray"]
+	backgroundColor: colors["green"]
 	borderRadius: 0
 
 
@@ -43,11 +42,8 @@ moveDown = (layer) ->
 	new Animation
 		layer: layer
 		properties: 
-			y: -> 
-				if layer.y > Screen.height
-					0
-				else
-					layer.y + 100
+			y: ->
+				layer.y + 100
 flip = (layer) ->
 	flipAnimation = new Animation
 		layer: layer
@@ -86,15 +82,14 @@ for y in [1..rows]
 			height: squareProps.height
 			x: (squareProps.width + squareProps.spacing) * (x - 1)
 			y: (squareProps.height + squareProps.spacing) * (y - 1)
-			backgroundColor: colors["purple"]
+			backgroundColor: "white"
 			superLayer: purpleContainer
 		purpleGroup.front moveDown(square)
+		square.on Events.Click, (event, layer) ->
+			purpleGroup.start()
 
-purpleContainer.on Events.Click, (event, layer) ->
-	purpleGroup.start()
 
 
-	
 
 # Execute
 # -------------------------------------
