@@ -6,7 +6,7 @@ window.Framer.Defaults.DeviceView = {"deviceScale":0.25,"deviceType":"fullscreen
 
 window.Framer.Defaults.DeviceComponent = {"deviceScale":0.25,"deviceType":"fullscreen","contentScale":1,"orientation":0};
 
-window.FramerStudioInfo = {"deviceImagesUrl":"\/_server\/resources\/DeviceImages","documentTitle":"AnimationChain.framer"};
+window.FramerStudioInfo = {"deviceImagesUrl":"\/_server\/resources\/DeviceImages","documentTitle":"AnimationCollections.framer"};
 
 Framer.Device = new Framer.DeviceView();
 Framer.Device.setupContext();

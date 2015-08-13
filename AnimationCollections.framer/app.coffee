@@ -5,44 +5,40 @@
 
 
 
+# Import classes
+# -------------------------------------
+
 {AnimationSequence} = require "AnimationSequence"
 {AnimationSet} = require "AnimationSet"
 
-# Classes
+
+
+
+# Setup
 # -------------------------------------
 
-
-
-# App
-# -------------------------------------
-
-
-# Set canvas props
-
-bg = new BackgroundLayer 
-	backgroundColor: "#292929"
-
-
-# Render colored squares
-
+# Remember these nice colors
 colors = 
 	"purple" : "#877DD7"
 	"blue" : "#28affa"
 	"teal" : "#2DD7AA"
 	"green" : "#7DDD11"
-
-do ->
-	i = 0
-	for key, value of colors
-		@[key] = new Layer
-			width: 50, height: 50
-			x: 50*i
-			backgroundColor: value
-		i++
+	"darkGray" : "#292929"
 
 
-# Animation functions
+# Override defaults
+Framer.Defaults.Layer.borderRadius = 8
+Framer.Defaults.Layer.backgroundColor = colors["blue"]
+Framer.Defaults.Animation.time = 0.3
 
+
+# Set canvas props
+bg = new BackgroundLayer 
+	backgroundColor: colors["darkGray"]
+	borderRadius: 0
+
+
+# Useful animation functions
 moveDown = (layer) ->
 	new Animation
 		layer: layer
@@ -52,56 +48,56 @@ moveDown = (layer) ->
 					0
 				else
 					layer.y + 100
-		time: 0.5
-
 flip = (layer) ->
 	flipAnimation = new Animation
 		layer: layer
 		properties: 
 			rotationZ: 360
-		time: 0.5
 	flipAnimation.on Events.AnimationEnd, ->
 		layer.rotationZ = 0
 
 
-# Animation Chains
 
-this.sequence1 = new AnimationSequence
-	animations:
-		a: moveDown(purple)
-		b: flip(purple)
-# 		c: moveDown(blue)
-# 		d: flip(blue)
-# 	repeat: true
 
-# sequence1.add moveDown(purple)
-# sequence1.add flip(purple)
-sequence1.add moveDown(blue)
-sequence1.add flip(blue)
-# sequence1.repeat = true
+# App
+# -------------------------------------
 
-sequence1.on Events.AnimationEnd, ->
-	print "sequence1 ended"
-	set1.start()
+squareProps = 
+	width: 80
+	height: 80
+	spacing: 20
+
+cols = 3
+rows = 3
+
+purpleContainer = new Layer
+	width: (squareProps.width + squareProps.spacing) * cols - squareProps.spacing
+	height: (squareProps.height + squareProps.spacing) * rows - squareProps.spacing
+	backgroundColor: ""
+	clip: false
+purpleContainer.center()
+
+purpleGroup = new AnimationSequence
+
+for y in [1..rows]
+	for x in [1..cols] 
+		square = new Layer
+			width: squareProps.width
+			height: squareProps.height
+			x: (squareProps.width + squareProps.spacing) * (x - 1)
+			y: (squareProps.height + squareProps.spacing) * (y - 1)
+			backgroundColor: colors["purple"]
+			superLayer: purpleContainer
+		purpleGroup.front moveDown(square)
+
+purpleContainer.on Events.Click, (event, layer) ->
+	purpleGroup.start()
+
+
 	
-
-this.set1 = new AnimationSet
-	animations:
-		a: moveDown(teal)
-		b: flip(teal)
-		c: moveDown(green)
-		d: flip(green)
-# 	repeat: true
-
-set1.on Events.AnimationEnd, ->
-	print "set1 ended"
-
-
-
 
 # Execute
 # -------------------------------------
 
-sequence1.start()
-# set1.start()
+# purpleGroup.start()
 

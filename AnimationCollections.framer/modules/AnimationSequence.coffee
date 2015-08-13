@@ -12,24 +12,30 @@ class exports.AnimationSequence extends Framer.EventEmitter
 		@_currentAnimation = null
 		@add(animation) for k, animation of options.animations
 		@repeat = options.repeat ? false
-			
-	add: (animation) =>
-		
+	
+	add: (animation, index) =>
+
 		# Ensure the animation is stopped (needed for when passed via the layer.animate method)
 		animation.stop()
 		
-		# Have the animation track it's own position in the chain
-		animation.index = @_animationsArray.length
-		
+		# Set animation callback
 		animation.on Events.AnimationEnd, =>
 			@_update()
-			
-		@_animationsArray.push animation
 		
-		# Set _currentAnimation if this is the first animation added
-		if @_animationsArray.length is 1
-			@_currentAnimation = @_animationsArray[0]
+		# No valid index was passed?
+		unless index? and index <= @_animationsArray.length
+			index = @_animationsArray.length
 		
+		# Insert animation into its position
+		@_animationsArray.splice index, 0, animation
+		
+		# Update Indices (animations need to track their own position)
+		animation.index = i for animation, i in @_animationsArray
+		
+	
+	front: (animation) =>
+		@add animation, 0
+		# @_unshift animation
 		
 	_update: =>
 		
@@ -53,7 +59,10 @@ class exports.AnimationSequence extends Framer.EventEmitter
 		@_animationsArray[@_currentAnimation.index + 1] ? @_animationsArray[0]
 	
 	start: =>
-		if @_currentAnimation?
+		if @_animationsArray.length > 0
+			# Set _currentAnimation if not set
+			unless @_currentAnimation?
+				@_currentAnimation = @_animationsArray[0]
 			@_currentAnimation.start()
 			@emit Events.AnimationStart
 		
