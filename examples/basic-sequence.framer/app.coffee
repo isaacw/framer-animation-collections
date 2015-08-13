@@ -35,6 +35,7 @@ Framer.Defaults.Animation.time = 1
 # Set canvas props
 bg = new BackgroundLayer 
 	backgroundColor: colors["blue"]
+	borderRadius: 0
 
 
 
@@ -70,8 +71,8 @@ growAnimation = new AnimationSequence
 				y: rect3.y + 100
 		moveMiddle: rect2.animate
 			properties:
-				scale: 1.618
-	repeat: true
+				scale: rect2.scale * 1.618
+# 	repeat: true
 
 
 

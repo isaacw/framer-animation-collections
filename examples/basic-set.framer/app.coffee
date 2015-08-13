@@ -33,7 +33,7 @@ Framer.Defaults.Animation.time = 2
 
 # Set canvas props
 bg = new BackgroundLayer 
-	backgroundColor: colors["blue"]
+	backgroundColor: colors["purple"]
 
 
 
@@ -72,7 +72,7 @@ moveAnimation = new AnimationSet
 				rotationX: 180
 		3: circle3.animate
 			properties:
-				borderRadius: 0
+				borderRadius: 8
 	repeat: true
 
 
