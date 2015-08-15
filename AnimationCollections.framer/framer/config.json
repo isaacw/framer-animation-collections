@@ -1,10 +1,12 @@
 {
+  "device" : "iPhone 5S Space Gray",
   "sharedPrototype" : 0,
   "deviceOrientation" : 0,
   "contentScale" : 1,
   "deviceType" : "fullscreen",
   "updateDelay" : 0.736559139784946,
   "deviceScale" : 0.25,
+  "delay" : 0.3,
   "orientation" : 0,
   "fullScreen" : false
 }

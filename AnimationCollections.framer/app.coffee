@@ -5,7 +5,7 @@
 
 
 
-# Import classes
+# Import modules
 # -------------------------------------
 
 {AnimationSequence} = require "AnimationSequence"
@@ -14,90 +14,60 @@
 
 
 
-# Setup
-# -------------------------------------
-
-# Remember these nice colors
-colors = 
-	"purple" : "#877DD7"
-	"blue" : "#28affa"
-	"teal" : "#2DD7AA"
-	"green" : "#7DDD11"
-	"darkGray" : "#292929"
-
-
-# Override defaults
-Framer.Defaults.Layer.borderRadius = 8
-Framer.Defaults.Layer.backgroundColor = colors["blue"]
-Framer.Defaults.Animation.time = 0.3
-
-
-# Set canvas props
-bg = new BackgroundLayer 
-	backgroundColor: colors["darkGray"]
-	borderRadius: 0
-
-
-# Useful animation functions
-moveDown = (layer) ->
-	new Animation
-		layer: layer
-		properties: 
-			y: -> 
-				if layer.y > Screen.height
-					0
-				else
-					layer.y + 100
-flip = (layer) ->
-	flipAnimation = new Animation
-		layer: layer
-		properties: 
-			rotationZ: 360
-	flipAnimation.on Events.AnimationEnd, ->
-		layer.rotationZ = 0
-
-
-
-
 # App
 # -------------------------------------
 
-squareProps = 
+
+# Override defaults
+Framer.Defaults.Layer.backgroundColor = "#877DD7"
+Framer.Defaults.Animation.time = 0.75
+
+
+# Set canvas props
+bg1 = new BackgroundLayer 
+	backgroundColor: "#292929"
+	
+bg2 = new BackgroundLayer 
+	backgroundColor: "white"
+
+# Render shape
+square = new Layer
 	width: 80
 	height: 80
-	spacing: 20
+	borderRadius: 8
+square.center()
 
-cols = 3
-rows = 3
+# Define animations
+rotateAnimation = new Animation
+	layer: square
+	properties: 
+		rotation: 360
 
-purpleContainer = new Layer
-	width: (squareProps.width + squareProps.spacing) * cols - squareProps.spacing
-	height: (squareProps.height + squareProps.spacing) * rows - squareProps.spacing
-	backgroundColor: ""
-	clip: false
-purpleContainer.center()
+moveAnimation = new Animation
+	layer: square
+	properties: 
+		scale: 2
 
-purpleGroup = new AnimationSequence
+tweenAnimation = new Animation
+	layer: square
+	properties: 
+		borderRadius: 40
 
-for y in [1..rows]
-	for x in [1..cols] 
-		square = new Layer
-			width: squareProps.width
-			height: squareProps.height
-			x: (squareProps.width + squareProps.spacing) * (x - 1)
-			y: (squareProps.height + squareProps.spacing) * (y - 1)
-			backgroundColor: colors["purple"]
-			superLayer: purpleContainer
-		purpleGroup.front moveDown(square)
+fadeBgAnimation = new Animation
+	layer: bg1
+	properties: 
+		opacity: 0
 
-purpleContainer.on Events.Click, (event, layer) ->
-	purpleGroup.start()
+# Create an animation sequence and add animations
+squaresAnimation = new AnimationSequence
+	animations:
+		first: rotateAnimation
+		second: moveAnimation
+		third: fadeBgAnimation
+		fourth: tweenAnimation
+
+# Call the start() method to see it in action
+squaresAnimation.start()
 
 
-	
-
-# Execute
-# -------------------------------------
-
-# purpleGroup.start()
 
