@@ -73,7 +73,7 @@ mySequence = new AnimationSequence
     repeat: false
 ```
 
-##### AnimationSequence.repeat *\<object\>*
+##### AnimationSequence.repeat *\<boolean\>*
 If set `true`, the sequence will repeat after the final animation has completed; `Events.AnimationEnd` will not emit.
 
 ##### AnimationSequence.add(animation *\<object\>*)
@@ -106,7 +106,7 @@ mySet = new AnimationSet
     repeat: false
 ```
 
-##### AnimationSet.repeat *\<object\>*
+##### AnimationSet.repeat *\<boolean\>*
 If set `true`, the set will repeat after all the animations have completed; `Events.AnimationEnd` will not emit.
 
 ##### AnimationSet.add(animation *\<object\>*)
