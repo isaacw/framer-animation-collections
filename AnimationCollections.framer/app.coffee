@@ -28,7 +28,8 @@ bg1 = new BackgroundLayer
 	backgroundColor: "#292929"
 	
 bg2 = new BackgroundLayer 
-	backgroundColor: "white"
+# 	backgroundColor: "white"
+	backgroundColor: "#000"
 
 # Render shape
 square = new Layer
@@ -43,28 +44,29 @@ rotateAnimation = new Animation
 	properties: 
 		rotation: 360
 
-moveAnimation = new Animation
+scaleAnimation = new Animation
 	layer: square
 	properties: 
 		scale: 2
-
-tweenAnimation = new Animation
-	layer: square
-	properties: 
-		borderRadius: 40
 
 fadeBgAnimation = new Animation
 	layer: bg1
 	properties: 
 		opacity: 0
 
+tweenAnimation = new Animation
+	layer: square
+	properties: 
+		borderRadius: 40
+
 # Create an animation sequence and add animations
 squaresAnimation = new AnimationSequence
-	animations:
-		first: rotateAnimation
-		second: moveAnimation
-		third: fadeBgAnimation
-		fourth: tweenAnimation
+	animations: [
+		rotateAnimation
+		scaleAnimation
+		fadeBgAnimation
+		tweenAnimation
+	]
 
 # Call the start() method to see it in action
 squaresAnimation.start()

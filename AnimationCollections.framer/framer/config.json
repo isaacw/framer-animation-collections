@@ -5,8 +5,7 @@
   "contentScale" : 1,
   "deviceType" : "fullscreen",
   "updateDelay" : 0.736559139784946,
-  "deviceScale" : 0.25,
+  "deviceScale" : 1,
   "delay" : 0.3,
-  "orientation" : 0,
-  "fullScreen" : false
+  "orientation" : 0
 }
