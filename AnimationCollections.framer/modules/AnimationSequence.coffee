@@ -11,7 +11,6 @@ class exports.AnimationSequence extends Framer.EventEmitter
 		@_animationsArray = []
 		@_currentAnimation = null
 		if _.isArray options.animations
-			print "array!"
 			@add(animation) for animation, k in options.animations
 		else
 			@add(animation) for k, animation of options.animations

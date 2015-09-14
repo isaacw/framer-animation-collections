@@ -9,7 +9,10 @@ class exports.AnimationSet extends Framer.EventEmitter
 	
 	constructor: (options = {}) ->
 		@_animationsArray = []
-		@add(animation) for k, animation of options.animations
+		if _.isArray options.animations
+			@add(animation) for animation, k in options.animations
+		else
+			@add(animation) for k, animation of options.animations
 		@repeat = options.repeat ? false
 			
 	add: (animation) =>
